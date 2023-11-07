@@ -1,0 +1,66 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: notice
+  profiles:
+    active: local
+    #active: deploy
+  # H2 Console 설정
+    # H2 Database 설정
+    datasource:
+      driver-class-name: org.h2.Driver
+      url: 'jdbc:h2:mem:test'   # H2 DB 연결 주소 (In-Memory Mode)
+      #url: 'jdbc:h2:~/test'    # H2 DB 연결 주소 (Embedded Mode)
+      username: username        # H2 DB 접속 ID (사용자 지정)
+      password: password        # H2 DB 접속 PW (사용자 지정)
+
+    # H2 Console 설정
+    h2:
+      console: # H2 DB를 웹에서 관리할 수 있는 기능
+        enabled: true           # H2 Console 사용 여부
+        path: /h2-console       # H2 Console 접속 주소
+  jackson:
+    serialization:
+      write-dates-as-timestamps: true
+  jpa:
+    properties:
+      hibernate:
+        use_sql_comments: 'true'
+        format_sql: 'true'
+        show_sql: 'true'
+    hibernate:
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      ddl-auto: 'create'
+      #ddl-auto=none:
+    #show-sql: 'true'
+    defer-datasource-initialization: 'true' #import data
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  devtools:
+    restart:
+      enabled: 'true'
+    livereload:
+      enabled: 'true'
+
+logging:
+  level:
+    root: info
+    org:
+      hibernate:
+        SQL: warn
+        type:
+          descriptor:
+            sql: warn
+
+#SECRET KEY (환경변수로 변경필수!)
+jwt:
+  secret:
+    key: keysecret12345678903s5v8y/B?E(H+M
+token:
+  access-expired-time : 14400000
+  refresh-expired-time : 2629800000

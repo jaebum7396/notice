@@ -1,4 +1,4 @@
-package com.notice;
+package notice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
-@ComponentScan(basePackages = {"common","notice"})
+@ComponentScan(basePackages = {"notice", "common"})
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
