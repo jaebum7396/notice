@@ -1,0 +1,4 @@
+rootProject.name = 'notice'
+include 'common'
+include 'api'
+
