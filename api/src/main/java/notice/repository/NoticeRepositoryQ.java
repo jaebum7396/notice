@@ -2,7 +2,8 @@ package notice.repository;
 
 import notice.model.entity.Notice;
 import java.util.List;
+import java.util.Optional;
 
 public interface NoticeRepositoryQ {
-    List<Notice> findByNoticeCd(String noticeCd);
+    Optional<Notice> findByNoticeCd(String noticeCd);
 }

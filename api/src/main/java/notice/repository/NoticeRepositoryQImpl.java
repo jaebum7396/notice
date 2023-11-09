@@ -10,6 +10,7 @@ import notice.model.entity.QNoticeAttach;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class NoticeRepositoryQImpl implements NoticeRepositoryQ {
@@ -17,7 +18,7 @@ public class NoticeRepositoryQImpl implements NoticeRepositoryQ {
     private EntityManager entityManager;
 
     @Override
-    public List<Notice> findByNoticeCd(String noticeCd) {
+    public Optional<Notice> findByNoticeCd(String noticeCd) {
         System.out.println("noticeCd: " + noticeCd);
         JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);
 
@@ -27,11 +28,13 @@ public class NoticeRepositoryQImpl implements NoticeRepositoryQ {
         JPQLQuery<Notice> query = queryFactory
                 .selectFrom(notice)
                 .leftJoin(notice.noticeAttachs, noticeAttach).fetchJoin()
-                .where(notice.noticeCd.eq(noticeCd))
+                .where(
+                    notice.noticeCd.eq(noticeCd)
+                    .and(notice.deleteYn.eq("N"))
+                    .and(noticeAttach.deleteYn.eq("N"))
+                )
                 .orderBy(notice.insertDt.desc());
 
-        List<Notice> notices =  query.fetch();
-        System.out.println("notices: " + notices.toString());
-        return notices;
+        return Optional.ofNullable(query.fetchOne());
     }
 }

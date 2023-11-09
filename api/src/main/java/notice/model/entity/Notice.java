@@ -32,8 +32,8 @@ public class Notice extends BaseEntity {
     @Column(name = "TITLE")
     private String title;
 
-    @Column(name = "CONTENTS")
-    private String contents;
+    @Column(name = "CONTENT")
+    private String content;
 
     @Column(name = "START_DT")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
