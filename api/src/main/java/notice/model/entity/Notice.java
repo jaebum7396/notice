@@ -46,6 +46,9 @@ public class Notice extends BaseEntity {
     @Column(name = "VIEWS")
     private Integer views;
 
+    @Column(name = "WRITER")
+    private String writer;
+
     @OneToMany(mappedBy = "notice", fetch = FetchType.EAGER, cascade = CascadeType.ALL) @Builder.Default
 	private List<NoticeAttach> noticeAttachs = new ArrayList<>();
     

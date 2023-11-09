@@ -34,7 +34,7 @@ public abstract class BaseEntity {
     @CreatedBy
     @JsonIgnore
     @Column(name = "INSERT_USER_CD")
-    private Long insertUserCd;
+    private String insertUserCd;
 
     @LastModifiedDate
     @Column(name = "UPDATE_DT")
@@ -43,7 +43,7 @@ public abstract class BaseEntity {
 
     @LastModifiedBy
     @Column(name = "UPDATE_USER_CD")
-    private Long updateUserCd;
+    private String updateUserCd;
 
     @Column(name = "DELETE_YN")
     private String deleteYn;
@@ -53,7 +53,7 @@ public abstract class BaseEntity {
     private LocalDateTime deleteDt;
 
     @Column(name = "DELETE_USER_CD")
-    private Long deleteUserCd;
+    private String deleteUserCd;
 
     @Column(name = "DELETE_REMARK")
     private String deleteRemark;
