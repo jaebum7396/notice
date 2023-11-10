@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import notice.common.exception.InvalidNoticeTimeException;
 import notice.model.entity.Notice;
 
 @Data
@@ -13,11 +14,11 @@ import notice.model.entity.Notice;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper=false)
 public class CreateNoticeDTO extends NoticeDTO{
-    @Schema(example = "작성자 코드")
+    @Schema(example = "작성자 코드", hidden = true)
     private String writerUserCd;
-    @Schema(example = "작성자")
+    @Schema(example = "작성자", hidden = true)
     private String writer;
-    public Notice toEntity() {
+    public Notice toEntity() throws InvalidNoticeTimeException {
         Notice notice = super.toEntity();
         notice.setInsertUserCd(this.writerUserCd);
         notice.setWriter(this.writer);

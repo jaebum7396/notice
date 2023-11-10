@@ -2,6 +2,7 @@
 dependencies {
     //data
     implementation 'com.h2database:h2'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc', version: '3.1.5'
 
     //jpa
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'

@@ -1,8 +1,5 @@
 package notice.controller;
 
-import jakarta.transaction.Transactional;
-import notice.model.dto.CreateNoticeDTO;
-import notice.model.dto.NoticeAttachDTO;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,10 +14,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.nio.charset.StandardCharsets;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -47,8 +42,8 @@ class NoticeControllerTest {
         requestBody = new JSONObject();
         requestBody.put("title", "test_notice1");
         requestBody.put("content", "test_notice 입니다.");
-        requestBody.put("startDt", LocalDateTime.now());
-        requestBody.put("endDt", LocalDateTime.now().plusDays(1));
+        requestBody.put("startDt", "2023-12-01 00:00:00");
+        requestBody.put("endDt", "2023-12-02 00:00:00");
         JSONArray noticeUriList = new JSONArray();
         JSONObject noticeAttach = new JSONObject();
         noticeAttach.put("attachUri", "test_uri1");
@@ -57,24 +52,91 @@ class NoticeControllerTest {
     }
 
     @Test
-    public void createNoticeTest() throws Exception {
+    public void readNoticeTest() throws Exception {
+        // 공지사항 작성
         String requestBodyStr = requestBody.toString();
         String uri = "/notice";
-
         ResultActions resultActions = sendMockRequest(uri, "POST", testToken, requestBodyStr);
+
+        MvcResult mvcResult = resultActions.andReturn();
+        String content = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+        // 방금 작성한 공지사항의 noticeCd를 추출
+        JSONObject jsonObject = new JSONObject(content);
+        String noticeCd = jsonObject.getJSONObject("result").getString("noticeCd");
+
+        // 응답결과가 200으로 반환되는지 확인
+        mockMvc.perform(
+            MockMvcRequestBuilders
+                .get(uri)
+                .param("noticeCd", noticeCd)
+        )
+        .andExpect(status().isOk());
+    }
+
+    @Test
+    public void createNoticeTest() throws Exception {
+        // 공지사항 작성
+        String requestBodyStr = requestBody.toString();
+        String uri = "/notice";
+        ResultActions resultActions = sendMockRequest(uri, "POST", testToken, requestBodyStr);
+
+        // 응답결과가 200으로 반환되는지 확인
         resultActions.andExpect(status().isOk());
     }
 
     @Test
     public void updateNoticeTest() throws Exception {
+        // 공지사항 작성
         String requestBodyStr = requestBody.toString();
         String uri = "/notice";
         ResultActions resultActions = sendMockRequest(uri, "POST", testToken, requestBodyStr);
-        resultActions.andExpect(status().isOk());
 
         MvcResult mvcResult = resultActions.andReturn();
-        String content = mvcResult.getResponse().getContentAsString();
-        // content를 원하는 방식으로 처리
-        System.out.println("Response Content: " + new String(content.getBytes("UTF-8"), "UTF-8"));
+        String content = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+        // 방금 작성한 공지사항의 noticeCd를 추출
+        JSONObject jsonObject = new JSONObject(content);
+        String noticeCd = jsonObject.getJSONObject("result").getString("noticeCd");
+
+        // 해당 noticeCd를 통해 공지사항을 수정
+        requestBody.put("noticeCd", noticeCd);
+        requestBody.put("title", "test_notice2");
+        resultActions = sendMockRequest(uri, "PUT", testToken, requestBody.toString());
+
+        // 응답결과가 200으로 반환되는지 확인
+        resultActions.andExpect(status().isOk());
+    }
+
+    @Test
+    public void deleteNoticeTest() throws Exception {
+        // 공지사항 작성
+        String requestBodyStr = requestBody.toString();
+        String uri = "/notice";
+        ResultActions resultActions = sendMockRequest(uri, "POST", testToken, requestBodyStr);
+
+        MvcResult mvcResult = resultActions.andReturn();
+        String content = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+        // 방금 작성한 공지사항의 noticeCd를 추출
+        JSONObject jsonObject = new JSONObject(content);
+        String noticeCd = jsonObject.getJSONObject("result").getString("noticeCd");
+
+        // 응답결과가 200으로 반환되는지 확인
+        mockMvc.perform(
+            MockMvcRequestBuilders
+                .delete(uri)
+                .header("Authorization", testToken)
+                .param("noticeCd", noticeCd)
+        )
+        .andExpect(status().isOk());
+
+        // 이후 다시 조회하였을 때, 응답결과가 404로 반환되는지 확인
+        mockMvc.perform(
+            MockMvcRequestBuilders
+                .get(uri)
+                .param("noticeCd", noticeCd)
+        )
+        .andExpect(status().isNotFound());
     }
 }

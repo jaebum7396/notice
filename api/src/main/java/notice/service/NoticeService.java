@@ -30,6 +30,10 @@ public class NoticeService {
         noticeRepository.deleteAll();
     }
 
+    public void physicalDelete(String noticeCd) {
+        noticeRepository.deleteById(noticeCd);
+    }
+
     public Notice readNotice(String noticeCd) throws Exception {
         Notice notice =  getNotice(noticeCd);
         // 조회수 증가
@@ -52,20 +56,19 @@ public class NoticeService {
     }
 
     public String createNotice(NoticeDTO noticeDTO) throws Exception {
-
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
         Notice noticeEntity = noticeDTO.toEntity();
         noticeRepository.save(noticeEntity);
-
         return noticeEntity.getNoticeCd();
     }
 
     public Map<String, Object> updateNotice(UpdateNoticeDTO noticeDTO) throws Exception {
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
-
+        if (((UpdateNoticeDTO) noticeDTO).getNoticeCd() == null){
+            throw new NotFoundException(Constants.NOTICE_CD_NOT_FOUND);
+        }
         Notice notice = noticeRepository.findByNoticeCd(((UpdateNoticeDTO) noticeDTO).getNoticeCd()).orElseThrow(
                 () -> new NotFoundException(Constants.NOTICE_NOT_FOUND));
-
         boolean isUpdated = false;
         if (!notice.getTitle().equals(noticeDTO.getTitle())) {
             notice.setTitle(noticeDTO.getTitle());
@@ -83,13 +86,11 @@ public class NoticeService {
             notice.setEndDt(noticeDTO.getEndDt());
             isUpdated = true;
         }
-
         //기존 첨부파일 중 삭제된 것이 있을 경우 삭제처리
         List<NoticeAttach> deletedNoticeAttachList = notice.getNoticeAttachs()
                 .stream()
                 .filter(noticeAttach -> noticeDTO.getNoticeUriList().stream().noneMatch(noticeAttachDTO -> noticeAttachDTO.getAttachUri().equals(noticeAttach.getAttachUri())))
                 .toList();
-
         if (!deletedNoticeAttachList.isEmpty()) {
             isUpdated = true;
             deletedNoticeAttachList.forEach(noticeAttach -> {
@@ -104,7 +105,6 @@ public class NoticeService {
                 .stream()
                 .filter(noticeAttachDTO -> notice.getNoticeAttachs().stream().noneMatch(noticeAttach -> noticeAttach.getAttachUri().equals(noticeAttachDTO.getAttachUri())))
                 .toList();
-
         if(!addedNoticeAttachList.isEmpty()){
             isUpdated = true;
             addedNoticeAttachList.forEach(noticeAttachDTO -> {
@@ -122,6 +122,7 @@ public class NoticeService {
             noticeRepository.save(notice);
             resultMap.put("noticeCd", notice.getNoticeCd());
         }
+
         resultMap.put("isUpdated", isUpdated);
         return resultMap;
     }

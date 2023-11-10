@@ -2,6 +2,7 @@ package notice.common;
 
 import common.model.Response;
 import io.jsonwebtoken.ExpiredJwtException;
+import notice.common.exception.InvalidNoticeTimeException;
 import notice.common.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,12 +40,12 @@ public class ErrorResponseAdvice {
 		Response responseResult;
 		Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
 		responseResult = Response.builder()
-				.message("로그인 시간이 만료되었습니다.")
+				.message(e.getMessage())
 				.result(resultMap).build();
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseResult);
 	}
 	@ExceptionHandler(HttpMessageNotReadableException.class)
-	public ResponseEntity<Response> handleHttpMessageNotReadableException(HttpMessageNotReadableException  e) {
+	public ResponseEntity<Response> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
 		Response responseResult;
 		Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
 		responseResult = Response.builder()
@@ -53,12 +54,21 @@ public class ErrorResponseAdvice {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseResult);
 	}
 	@ExceptionHandler(NotFoundException.class)
-	public ResponseEntity<Response> handleNotFoundException(NotFoundException  e) {
+	public ResponseEntity<Response> handleNotFoundException(NotFoundException e) {
 		Response responseResult;
 		Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
 		responseResult = Response.builder()
 				.message(e.getMessage())
 				.result(resultMap).build();
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseResult);
+	}
+	@ExceptionHandler(InvalidNoticeTimeException.class)
+	public ResponseEntity<Response> handleInvalidNoticeTime(InvalidNoticeTimeException e) {
+		Response responseResult;
+		Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
+		responseResult = Response.builder()
+				.message(e.getMessage())
+				.result(resultMap).build();
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseResult);
 	}
 }

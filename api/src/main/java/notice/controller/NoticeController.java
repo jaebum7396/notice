@@ -35,7 +35,6 @@ public class NoticeController {
     public ResponseEntity<Response> getNoticeAll() throws Exception {
         return commonUtils.okResponsePackaging(noticeService.getNoticeAll());
     }
-
     @GetMapping(value = "/notice")
     @Operation(summary="공지사항 조회 엔드포인트", description="공지사항 조회 API")
     public ResponseEntity<Response> readNotice(HttpServletRequest request, @RequestParam("noticeCd") String noticeCd) throws Exception {
@@ -80,7 +79,6 @@ public class NoticeController {
         };
         return commonUtils.okResponsePackaging(resultMap);
     }
-
     @DeleteMapping(value = "/notice")
     @Operation(summary="공지사항 삭제 엔드포인트", description="공지사항 삭제 API")
     public ResponseEntity<Response> deleteNotice(HttpServletRequest request, @RequestParam("noticeCd") String noticeCd) throws Exception {
