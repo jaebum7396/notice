@@ -1,3 +1,4 @@
 [submodule "common"]
 	path = common
 	url = https://github.com/jaebum7396/common.git
+	branch = master
