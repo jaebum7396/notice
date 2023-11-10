@@ -16,6 +16,8 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -39,11 +41,21 @@ class NoticeControllerTest {
 
     @BeforeEach
     void beforeEach() throws JSONException {
+        // 현재 날짜와 시간 가져오기
+        LocalDateTime now = LocalDateTime.now();
+        // 오늘 밤 12시 설정
+        LocalDateTime todayStart = now.withHour(0).withMinute(0).withSecond(0).withNano(0);
+        LocalDateTime nextDayStart = todayStart.plusDays(1);
+        LocalDateTime nextNextDayStart = nextDayStart.plusDays(1);
+        // 포맷터를 사용하여 문자열로 변환
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String todayStr = todayStart.format(formatter);
+
         requestBody = new JSONObject();
         requestBody.put("title", "test_notice1");
         requestBody.put("content", "test_notice 입니다.");
-        requestBody.put("startDt", "2023-12-01 00:00:00");
-        requestBody.put("endDt", "2023-12-02 00:00:00");
+        requestBody.put("startDt", nextDayStart.format(formatter)); //내일부터
+        requestBody.put("endDt", nextNextDayStart.format(formatter)); //다다음날까지
         JSONArray noticeUriList = new JSONArray();
         JSONObject noticeAttach = new JSONObject();
         noticeAttach.put("attachUri", "test_uri1");

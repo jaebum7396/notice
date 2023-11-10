@@ -4,7 +4,6 @@ import notice.common.Constants.Constants;
 import notice.common.exception.NotFoundException;
 import notice.model.dto.CreateNoticeDTO;
 import notice.model.dto.NoticeAttachDTO;
-import notice.model.dto.NoticeDTO;
 import notice.model.dto.UpdateNoticeDTO;
 import notice.model.entity.Notice;
 import org.junit.jupiter.api.*;
@@ -24,17 +23,25 @@ class NoticeServiceTest {
 
     @Autowired
     NoticeService noticeService;
-
     CreateNoticeDTO createNoticeDTO = null;
     NoticeAttachDTO noticeAttachDTO = null;
 
     @BeforeEach
     void beforeEach() {
+        // 현재 날짜와 시간 가져오기
+        LocalDateTime now = LocalDateTime.now();
+        // 오늘 밤 12시 설정
+        LocalDateTime todayStart = now.withHour(0).withMinute(0).withSecond(0).withNano(0);
+        LocalDateTime nextDayStart = todayStart.plusDays(1);
+        LocalDateTime nextNextDayStart = nextDayStart.plusDays(1);
+        // 포맷터를 사용하여 문자열로 변환
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String todayStr = todayStart.format(formatter);
         createNoticeDTO = new CreateNoticeDTO();
         createNoticeDTO.setTitle("글 제목");
         createNoticeDTO.setContent("글 내용");
-        createNoticeDTO.setStartDt(LocalDateTime.now());
-        createNoticeDTO.setEndDt(LocalDateTime.now().plusDays(1));
+        createNoticeDTO.setStartDt(nextDayStart); //내일부터
+        createNoticeDTO.setEndDt(nextNextDayStart); //다다음날까지
         createNoticeDTO.setNoticeUriList(new ArrayList<>());
         noticeAttachDTO = new NoticeAttachDTO();
         noticeAttachDTO.setAttachUri("테스트 URI");
