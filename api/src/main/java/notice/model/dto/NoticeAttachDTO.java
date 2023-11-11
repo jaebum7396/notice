@@ -1,5 +1,6 @@
 package notice.model.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -13,5 +14,6 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper=false)
 public class NoticeAttachDTO {
     // 첨부 파일의 URI
+    @Schema(example = "www.example.com/attach/1")
     String attachUri;
 }

@@ -32,13 +32,13 @@ public class NoticeDTO {
     private String content;
 
     // 공지사항 시작일시
-    @Schema(example = "공지 시작일시(yyyy-MM-dd HH:mm:ss)")
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @Schema(example = "공지 시작일시(yyyy-MM-dd HH:mm:ss)")
     private LocalDateTime startDt;
 
     // 공지사항 종료일시
-    @Schema(example = "공지 종료일시(yyyy-MM-dd HH:mm:ss)")
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @Schema(example = "공지 종료일시(yyyy-MM-dd HH:mm:ss)")
     private LocalDateTime endDt;
 
     // 첨부파일 URI 목록
