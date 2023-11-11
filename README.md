@@ -5,11 +5,18 @@
 Java, Spring Boot, Gradle, JPA, querydsl, H2 database
 ```
 
-## 실행방법
+### 실행방법
 * github pull 이후, 빌드 한 뒤 메인 메서드(api 모듈의 notice 패키지의 Application.java에 위치) 실행
 * swagger uri(swagger-ui/index.html)
-## 구현기능
+### 구현기능
 ![캡처](https://github.com/jaebum7396/notice/assets/38182229/70d21cd8-fd11-4ce3-8367-e73457dee56a)
 * 일부 요청에는 요청 헤더에 Authorization이 필요합니다!(-H Authorization : Bearer ${jwt})
+* test token -- eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInVzZXJObSI6ImFkbWluIn0.ELfEy-gNZsxrwKCq5VAN2dQRFHCtOjiksszDMfU5ai4
+### 요청예시
+![캡처](https://github.com/jaebum7396/notice/assets/38182229/aec6d7cc-f0d5-4a82-828b-80776da03f11)
+![캡처](https://github.com/jaebum7396/notice/assets/38182229/c8213e4f-0fb8-41e9-9b87-4f9cd4dbfeb6)
+![캡처](https://github.com/jaebum7396/notice/assets/38182229/42149ea2-8905-45b5-8819-998962412f21)
+![캡처](https://github.com/jaebum7396/notice/assets/38182229/62c7451b-03eb-42c6-8ee8-5bdfbc9e7f0d)
+
 
 
