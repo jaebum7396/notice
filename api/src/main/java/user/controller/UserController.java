@@ -13,7 +13,7 @@ import user.model.LoginRequest;
 import user.service.AuthService;
 
 @Slf4j
-@Tag(name = "UserController", description = "회원가입, 유저정보")
+@Tag(name = "UserController", description = "임시 jwt 생성하기 위한 컨트롤러")
 @RestController
 @RequiredArgsConstructor
 public class UserController {
