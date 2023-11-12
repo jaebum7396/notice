@@ -13,6 +13,7 @@ root project인 notice 아래에 실제 기능 구현부인 api 모듈이 위치
 ### 실행방법
 * github pull 이후, 빌드 한 뒤 메인 메서드(api 모듈의 notice 패키지의 Application.java에 위치) 실행
 * swagger uri(swagger-ui/index.html)
+* h2 database를 inmemory로 실행하고 있습니다.(별도 설정 불필요 -- 서버모드로 실행하기 위해서는 별도로 h2 설치가 필요합니다.)
 
 ### 구현기능
 ![캡처](https://github.com/jaebum7396/notice/assets/38182229/70d21cd8-fd11-4ce3-8367-e73457dee56a)
