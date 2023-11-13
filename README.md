@@ -30,10 +30,11 @@ root project인 notice 아래에 실제 기능 구현부인 api 모듈이 위치
 ![캡처](https://github.com/jaebum7396/notice/assets/38182229/fab65ada-8d7a-4188-8c9a-3ac386442690)  
 
 #### put -- 공지사항 수정 (요청 헤더에 Authorization이 필요합니다!(-H Authorization : Bearer ${jwt}))
+※ 공지사항 청부파일의 경우, 기록을 남기기 위해 기존 첨부파일 uri가 있는지 확인하여 없을 경우 논리 삭제(deleteYn 필드값 활용)를 하는 것으로 구현하였습니다.
 ![캡처](https://github.com/jaebum7396/notice/assets/38182229/dd4ac7d0-d5c2-4550-8ebd-bf3b35417ea9)  
 
 #### delete -- 공지사항 삭제 (요청 헤더에 Authorization이 필요합니다!(-H Authorization : Bearer ${jwt}))
-delete의 경우 물리 삭제가 아닌 논리 삭제(deleteYn 필드값 활용)로 구현하였습니다.
+※ delete의 경우 물리 삭제가 아닌 논리 삭제(deleteYn 필드값 활용)를 하는 것으로 구현하였습니다.
 ![캡처](https://github.com/jaebum7396/notice/assets/38182229/145216c3-8f37-4762-a532-755a10074296)  
 
 
