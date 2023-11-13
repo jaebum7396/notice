@@ -6,9 +6,9 @@ Java, Spring Boot, Gradle, JPA, querydsl, H2 database
 ```
 
 ### 프로젝트 구조
-![캡처](https://github.com/jaebum7396/notice/assets/38182229/0bee95a5-af5b-4191-b498-f02a7b95cd4a)
+![캡처](https://github.com/jaebum7396/notice/assets/38182229/0bee95a5-af5b-4191-b498-f02a7b95cd4a)  
 root project인 notice 아래에 실제 기능 구현부인 api 모듈이 위치하고  
-횡단관심사를 관리하기 위한 common 모듈을 서브모듈 (https://github.com/jaebum7396/common) 로 가지고 있습니다 .
+횡단관심사를 관리하기 위한 common 모듈을 서브모듈 (https://github.com/jaebum7396/common) 로 가지고 있습니다.
 
 ### 실행방법
 * github pull 이후, 빌드 한 뒤 메인 메서드(api 모듈의 notice 패키지의 Application.java에 위치) 실행
