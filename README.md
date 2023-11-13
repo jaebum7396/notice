@@ -24,16 +24,17 @@ root project인 notice 아래에 실제 기능 구현부인 api 모듈이 위치
 ### 요청예시
 
 #### create -- 공지사항 작성 (요청 헤더에 Authorization이 필요합니다!(-H Authorization : Bearer ${jwt}))
-![캡처](https://github.com/jaebum7396/notice/assets/38182229/bd745f56-1b5c-4c2c-8d5b-125b5e58b52a)
+![캡처](https://github.com/jaebum7396/notice/assets/38182229/bd745f56-1b5c-4c2c-8d5b-125b5e58b52a)  
+
 #### read -- 공지사항 조회 (읽을 시 views +1)
-![캡처](https://github.com/jaebum7396/notice/assets/38182229/fab65ada-8d7a-4188-8c9a-3ac386442690)
+![캡처](https://github.com/jaebum7396/notice/assets/38182229/fab65ada-8d7a-4188-8c9a-3ac386442690)  
 
 #### put -- 공지사항 수정 (요청 헤더에 Authorization이 필요합니다!(-H Authorization : Bearer ${jwt}))
-![캡처](https://github.com/jaebum7396/notice/assets/38182229/dd4ac7d0-d5c2-4550-8ebd-bf3b35417ea9)
+![캡처](https://github.com/jaebum7396/notice/assets/38182229/dd4ac7d0-d5c2-4550-8ebd-bf3b35417ea9)  
 
 #### delete -- 공지사항 삭제 (요청 헤더에 Authorization이 필요합니다!(-H Authorization : Bearer ${jwt}))
 delete의 경우 물리 삭제가 아닌 논리 삭제(deleteYn 필드값 활용)로 구현하였습니다.
-![캡처](https://github.com/jaebum7396/notice/assets/38182229/145216c3-8f37-4762-a532-755a10074296)
+![캡처](https://github.com/jaebum7396/notice/assets/38182229/145216c3-8f37-4762-a532-755a10074296)  
 
 
 
